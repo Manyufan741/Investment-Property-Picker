@@ -9,6 +9,7 @@ function App() {
     <div className="App">
       <Container fluid>
       <h1>Customizable Investment Property Selection</h1>
+      <hr />
       <FileUploader />
     </Container>
     </div>

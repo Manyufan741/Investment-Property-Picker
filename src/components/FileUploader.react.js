@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import { Table, Form, Row, Col, Container, Button } from "react-bootstrap";
+import { Table, Form, Row, Col, Container, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/table.css";
 // import StickyTable from "react-sticky-table";
+import EditableCell from "./EditableCell.react.js";
 
 const propertyTaxRateMap = {
   'Anthem': 0.79 * 0.01,
@@ -34,30 +35,73 @@ const FileUploader = () => {
   const [sortField, setSortField] = useState("netRatio");
   const [sortDirection, setSortDirection] = useState("asc");
 
+  // const sortData = (data, field, direction) => {
+  //   const sortedData = [...data].sort((a, b) => {
+  //     if (a[field] === b[field]) {
+  //       return 0;
+  //     }
+  //     return a[field] > b[field] ? (direction === "asc" ? 1 : -1) : (direction === "asc" ? -1 : 1);
+  //   });
+  //   return sortedData;
+  // };
+
   const sortData = (data, field, direction) => {
-    const sortedData = [...data].sort((a, b) => {
+    return [...data].sort((a, b) => {
       if (a[field] === b[field]) {
         return 0;
       }
       return a[field] > b[field] ? (direction === "asc" ? 1 : -1) : (direction === "asc" ? -1 : 1);
     });
-    return sortedData;
   };
+  
+
+  // const handleSort = (field) => {
+  //   const newSortField = field === sortField ? sortField : field;
+  //   const newSortDirection = newSortField === sortField && sortDirection === "asc" ? "desc" : "asc";
+  //   const sortedData = sortData(data, newSortField, newSortDirection);
+  //   setData(sortedData);
+  //   setSortField(newSortField);
+  //   setSortDirection(newSortDirection);
+  // };
 
   const handleSort = (field) => {
-    const newSortField = field === sortField ? sortField : field;
-    const newSortDirection = newSortField === sortField && sortDirection === "asc" ? "desc" : "asc";
-    const sortedData = sortData(data, newSortField, newSortDirection);
-    setData(sortedData);
+    const newSortField = field;
+    const newSortDirection = sortField === field && sortDirection === "asc" ? "desc" : "asc";
+  
+    // Update the state with the sorted data
+    setData(prevData => sortData(prevData, newSortField, newSortDirection));
+  
+    // Update the sort field and direction
     setSortField(newSortField);
     setSortDirection(newSortDirection);
+  };
+  
+
+  const handleRentChange = (index, newRent) => {
+    const newData = [...data];
+    newData[index].estimatedRent = newRent;
+
+    console.log('----------');
+    console.log('index:', index);
+    console.log( newData[index].estimatedRent);
+  
+    // Recalculate netRatio for the updated row
+    const row = newData[index];
+    let monthlyInterest = parseFloat(((row.PRICE - downPayment + additionalCost) * interestRate * 0.01 / 12).toFixed(2));
+    let netRatio = parseFloat((((newRent - (monthlyInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee)) * 12 / (row.PRICE + additionalCost)) * 100).toFixed(2));
+  
+    newData[index].netRatio = netRatio;
+
+    
+    console.log('new netRaio is:', newData[index].netRatio);
+  
+    setData(newData);
   };
 
   const handleFileChange = (event) => {
     const uploadedFile = event.target.files[0];
     const validExtensions = ['xlsx', 'xls', 'csv'];
     const extension = uploadedFile.name.split('.').pop().toLowerCase();
-    console.log('extension: ' + extension);
 
     if (!validExtensions.includes(extension)) {
       alert('Only Excel (.xlsx, .xls) and CSV (.csv) files are allowed!');
@@ -74,7 +118,12 @@ const FileUploader = () => {
   };
 
   const handleDownPaymentChange = (event) => {
-    const newDownPayment = parseInt(event.target.value);
+    let newDownPayment = 0;
+    if (!event.target.value){
+      newDownPayment = 0;
+    }else{
+      newDownPayment = parseFloat(event.target.value);
+    }    
     setDownPayment(newDownPayment);
     setData(data.map((row) => {
       let monthlyInterest = parseFloat(((row.PRICE - newDownPayment + additionalCost) * interestRate * 0.01 / 12).toFixed(2));
@@ -86,33 +135,48 @@ const FileUploader = () => {
   };
 
   const handleInterestRateChange = (event) => {
-    const newInterestRate = parseFloat(event.target.value);
+    let newInterestRate = 0;
+    if (!event.target.value){
+      newInterestRate = 0;
+    }else{
+      newInterestRate = parseFloat(event.target.value);
+    }    
     setInterestRate(newInterestRate);
     setData(data.map((row) => {
       let monthlyInterest = parseFloat(((row.PRICE - downPayment + additionalCost) * newInterestRate * 0.01 / 12).toFixed(2));
 
-      let netRatio = parseFloat((((row.estimatedRent - (monthlyInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee)) * 12 / (row.PRICE + additionalCost))*100).toFixed(2));
+      let netRatio = parseFloat((((row.estimatedRent - (monthlyInterest + row.monthlyPropertyTax + row.monthlyHOA + homeInsurance + managementFee)) * 12 / (row.PRICE + additionalCost))*100).toFixed(2));
 
       return { ...row, monthlyInterest: monthlyInterest, netRatio:netRatio};
     }));
   };
 
   const handleAdditionalCostChange = (event) => {
-    const newAdditionalCost = parseFloat(event.target.value);
+    let newAdditionalCost = additionalCost;
+    if(!event.target.value){
+      newAdditionalCost = additionalCost;
+    }else{
+      newAdditionalCost = parseFloat(event.target.value);
+    }
     setAdditionalCost(newAdditionalCost);
     setData(data.map((row) => {
       let newLoanAmount = parseFloat((row.PRICE - row.DOWNPAYMENT + newAdditionalCost).toFixed(2));
 
       let monthlyInterest = parseFloat((newLoanAmount * interestRate * 0.01 / 12).toFixed(2));
 
-      let netRatio = parseFloat((((row.estimatedRent - (monthlyInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee)) * 12 / (row.PRICE + newAdditionalCost))*100).toFixed(2));
+      let netRatio = parseFloat((((row.estimatedRent - (monthlyInterest + row.monthlyPropertyTax + row.monthlyHOA + homeInsurance + managementFee)) * 12 / (row.PRICE + newAdditionalCost))*100).toFixed(2));
 
       return { ...row, LOANAMOUNT: newLoanAmount, monthlyInterest: monthlyInterest, netRatio: netRatio};
     }));
   };
 
   const handleHomeInsuranceChange = (event) => {
-    const newHomeInsurance = parseFloat(event.target.value);
+    let newHomeInsurance = homeInsurance;
+    if(!event.target.value){
+      newHomeInsurance = homeInsurance;
+    }else{
+      newHomeInsurance = parseFloat(event.target.value);
+    }
     setHomeInsurance(newHomeInsurance);
     setData(data.map((row) => {
       let monthlyInterest = parseFloat(((row.PRICE - downPayment + additionalCost) * interestRate * 0.01 / 12).toFixed(2));
@@ -124,10 +188,20 @@ const FileUploader = () => {
   };
 
   const handleManagementFeeChange = (event) => {
-    const newManagementFee = parseFloat(event.target.value);
+    let newManagementFee = managementFee;
+    if(!event.target.value){
+      newManagementFee = managementFee;
+    }else{
+      newManagementFee = parseFloat(event.target.value);
+    }
     setManagementFee(newManagementFee);
+
     setData(data.map((row) => {
-      return { ...row, monthlyManagementFee: (newManagementFee).toFixed(2)};
+      let monthlyInterest = parseFloat(((row.PRICE - downPayment + additionalCost) * interestRate * 0.01 / 12).toFixed(2));
+
+      let netRatio = parseFloat((((row.estimatedRent - (monthlyInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + newManagementFee)) * 12 / (row.PRICE + additionalCost))*100).toFixed(2));
+
+      return { ...row, monthlyManagementFee: (newManagementFee).toFixed(2), netRatio: netRatio};
     }));
   };
 
@@ -140,7 +214,7 @@ const FileUploader = () => {
     });
 
     const allData = csvData.data; // Array of objects representing each row
-    console.log(allData);
+    // console.log(allData);
     // const headers = csvData.meta.fields; // Array of column names
     let parsedData = [];
     allData.forEach((dict, idx) => {
@@ -178,57 +252,93 @@ const FileUploader = () => {
     <Container fluid>
       <Row>
         <Col md={2}>
-          <h3>Financial Specs</h3>
-          <Form>
-            <Form.Group controlId="file-upload">
-              <Form.Label>Upload Property Specs List:</Form.Label>
-              <Form.Control type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
-            </Form.Group>
-            <Form.Group controlId="interest-rate">
-              <Form.Label>Interest Rate</Form.Label>
-              <Form.Control
-                type="number"
-                value={interestRate}
-                onChange={handleInterestRateChange}
-                min={0}
-                max={100}
-                step={0.01}
-              />
-              <Form.Text className="text-muted">%</Form.Text>
-            </Form.Group>
-            <Form.Group controlId="downpayment">
-              <Form.Label>Downpayment</Form.Label>
-              <Form.Control type="number" value={downPayment} onChange={handleDownPaymentChange} />
-              <Form.Text className="text-muted">USD</Form.Text>
-            </Form.Group>
-            <Form.Group controlId="additionalCost">
-              <Form.Label>Additional One Time Cost</Form.Label>
-              <Form.Control
-                type="number"
-                value={additionalCost}
-                onChange={handleAdditionalCostChange}
-              />
-              <Form.Text className="text-muted">USD</Form.Text>
-            </Form.Group>
-            <Form.Group controlId="homeInsurance">
-              <Form.Label>Home Insurance Per Month</Form.Label>
-              <Form.Control
-                type="number"
-                value={homeInsurance}
-                onChange={handleHomeInsuranceChange}
-              />
-              <Form.Text className="text-muted">USD</Form.Text>
-            </Form.Group>
-            <Form.Group controlId="managementFee">
-              <Form.Label>Management Fee Per Month</Form.Label>
-              <Form.Control
-                type="number"
-                value={managementFee}
-                onChange={handleManagementFeeChange}
-              />
-              <Form.Text className="text-muted">USD</Form.Text>
-            </Form.Group>
+          <Card>
+            <Card.Body>
+              <Form>
+                <Form.Group controlId="file-upload">
+                  <Form.Label><b>Upload</b> Property Specs List:</Form.Label>
+                  <Form.Control type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+          <hr />
+          <h4>↓ Financial Specs ↓</h4>
+          <hr />
+          <Card>
+            <Card.Body>
+              <Form>
+                <Form.Group controlId="interest-rate">
+                  <Form.Label>Interest Rate</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={interestRate}
+                    onChange={handleInterestRateChange}
+                    min={0}
+                    max={100}
+                    step={0.01}
+                  />
+                  <Form.Text className="text-muted">%</Form.Text>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Body>
+              <Form>
+                <Form.Group controlId="downpayment">
+                  <Form.Label>Downpayment</Form.Label>
+                  <Form.Control type="number" value={downPayment} onChange={handleDownPaymentChange} />
+                  <Form.Text className="text-muted">USD</Form.Text>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Body>
+              <Form>
+                <Form.Group controlId="additionalCost">
+                  <Form.Label>Additional One Time Cost</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={additionalCost}
+                    onChange={handleAdditionalCostChange}
+                  />
+                  <Form.Text className="text-muted">USD</Form.Text>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Body>
+              <Form>
+          <Form.Group controlId="homeInsurance">
+            <Form.Label>Home Insurance Per Month</Form.Label>
+            <Form.Control
+              type="number"
+              value={homeInsurance}
+              onChange={handleHomeInsuranceChange}
+            />
+            <Form.Text className="text-muted">USD</Form.Text>
+          </Form.Group>
           </Form>
+          </Card.Body>
+          </Card>
+          <Card>
+            <Card.Body>
+              <Form>
+          <Form.Group controlId="managementFee">
+            <Form.Label>Management Fee Per Month</Form.Label>
+            <Form.Control
+              type="number"
+              value={managementFee}
+              onChange={handleManagementFeeChange}
+            />
+            <Form.Text className="text-muted">USD</Form.Text>
+          </Form.Group>
+          </Form>
+          </Card.Body>
+          </Card>
         </Col>
         <Col md={10}>
           <h3>Property Details Breakdown</h3>
@@ -260,7 +370,8 @@ const FileUploader = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortData(data, sortField, sortDirection).map((row, index) => (
+                  {/* {sortData(data, sortField, sortDirection).map((row, index) => ( */}
+                  {data.map((row, index) => (
                     <tr key={index}>
                       <td>
                         <a href={row.URL} target="_blank" rel="noreferrer">
@@ -279,7 +390,8 @@ const FileUploader = () => {
                       <td>{row.monthlyHOA}</td>
                       <td>{row.monthlyHomeInsurance}</td>
                       <td>{row.monthlyManagementFee}</td>
-                      <td>{row.estimatedRent}</td>
+                      {/* <td><{row.estimatedRent}></td> */}
+                      <td>{<EditableCell value={row.estimatedRent} onValueChange={(newRent) => handleRentChange(index, newRent)}/>}</td>
                       <td>{row.netRatio}</td>
                     </tr>
                   ))}

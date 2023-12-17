@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/table.css";
 // import StickyTable from "react-sticky-table";
 import EditableCell from "./EditableCell.react.js";
+import ExportButton from './ExportButton.react.js';
 
 const propertyTaxRateMap = {
   'Anthem': 0.79 * 0.01,
@@ -401,6 +402,7 @@ const FileUploader = () => {
           )}
         </Col>
       </Row>
+      <ExportButton data={data} />
     </Container>
   );
 };

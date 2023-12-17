@@ -4,7 +4,7 @@ A side project for picking investment property. This project should be able to h
 
 Run Book:
 
-- Users should use [Redfin] (https://www.redfin.com/) to export an Excel sheet for this project.
+- Users should use [Redfin](https://www.redfin.com/) to export an Excel sheet for this project.
 
 - Upload the exported file into the project. The tool should render a table with all the properties' information along side the estimated rent and net ratio of each property.
 

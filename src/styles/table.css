@@ -1,30 +1,23 @@
 .table-container {
-    overflow: scroll;
-    max-height: 85vh; /* Adjust height as needed */
-  }
-  
-  .table-container th,
-  .table-container td {
-    background-color: #d6e7fa;
-  }
-  
-  .table-container tbody tr:not(:first-child) {
-    margin-top: 0.5rem; /* Adjust margin as needed */
-  }
-  
-  .table-container thead {
-    background-color: #460d0d; /* Adjust color as needed */
-    font-weight: bold;
-    position: sticky; /* Sticky header */
-    top: 0;
-  }
-  
-  .table-container thead tr:first-child {
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: #460d0d; /* Adjust color as needed */
-    font-weight: bold;
-    z-index: 1; /* Sticky first row with z-index */
-  }
-  
+  overflow: scroll;
+  max-height: 85vh;
+  /* Adjust height as needed */
+}
+
+.table-container th {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #d6e7fa;
+  font-weight: bold;
+  z-index: 1;
+  /* Sticky first row with z-index */
+}
+
+.table-container td {
+  background-color: #d6e7fa;
+}
+
+*/ .table-container .monthly-cost-cells {
+  background-color: rgb(250, 176, 65);
+}

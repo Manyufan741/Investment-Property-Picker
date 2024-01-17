@@ -31,7 +31,7 @@ function App() {
           </Col>
           <Col md={10}>
             <PropertyTable data={data} setData={setData} traditionalMortgageRate={traditionalMortgageRate} downpayment={downpayment} additionalCosts={additionalCosts} />
-            <hr />
+            <br />
             <ExportButton data={data} />
           </Col>
         </Row>

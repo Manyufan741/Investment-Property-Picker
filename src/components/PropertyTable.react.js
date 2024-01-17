@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import "../styles/table.css";
-import EditableCell from "./EditableCell.react.js";
 import { Table } from 'react-bootstrap';
+
+import EditableCell from "./EditableCell.react.js";
+
+import "../styles/table.css";
+import Bluey from "../images/Bluey.png";
+import Bingo from "../images/Bingo.png";
+
 
 const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageRate, downpayment, additionalCosts }) => {
 	const [sortField, setSortField] = useState("netRatio");
@@ -92,7 +97,11 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 
 	return (
 		<div>
-			<h3>Property Details Breakdown</h3>
+			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
+				<img src={Bluey} alt="Cute" style={{ width: "8%", height: "auto" }} />
+				<h3>Property Details Breakdown</h3>
+				<img src={Bingo} alt="Cute" style={{ width: "8%", height: "auto" }} />
+			</div>
 			{
 				data.length > 0 && (
 					<div className="table-container">

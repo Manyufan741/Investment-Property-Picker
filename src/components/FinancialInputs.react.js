@@ -95,6 +95,7 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
           </Form>
         </Card.Body>
       </Card>
+      <br />
       <Card>
         <Card.Body>
           <Form>
@@ -106,6 +107,7 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
           </Form>
         </Card.Body>
       </Card>
+      <br />
       <Card>
         <Card.Body>
           <Form>

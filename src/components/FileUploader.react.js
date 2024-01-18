@@ -55,8 +55,6 @@ const FileUploader = ({ setData }) => {
     });
 
     const allData = csvData.data; // Array of objects representing each row
-    // console.log(allData);
-    // const headers = csvData.meta.fields; // Array of column names
     let parsedData = [];
     allData.forEach((dict, idx) => {
       if (idx !== 0) {
@@ -69,11 +67,8 @@ const FileUploader = ({ setData }) => {
         let additionalCosts = 20000;
 
         let traditionalMortgageAmount = listingPrice + additionalCosts - downPayment;
-        console.log('traditionalMortgageAmount', traditionalMortgageAmount);
-
         let traditionalMortgageInterestRate = 7;
         let monthlyTraditionalMortgageInterest = calculateMonthlyTraditionalMortgagePayment(30, traditionalMortgageInterestRate, traditionalMortgageAmount);
-        console.log('monthly mortgage interest', monthlyTraditionalMortgageInterest)
         let homeInsurance = 170;
         let managementFee = 120;
         // ------------------------------------------------------------------------
@@ -82,20 +77,13 @@ const FileUploader = ({ setData }) => {
 
         let estimatedRent = parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2));
         let annualIncome = estimatedRent * 12;
-        console.log('estimatedRent', estimatedRent);
-        console.log('annual income', annualIncome);
         let monthlyHOA = parseFloat(dict['HOA/MONTH'] === null ? 0 : parseFloat(dict['HOA/MONTH']));
 
         let totalMonthlyCost = parseFloat((monthlyTraditionalMortgageInterest + monthlyPropertyTax + monthlyHOA + homeInsurance + managementFee).toFixed(2));
 
-        console.log('total Monthy Cost', totalMonthlyCost);
-
         let totalAnnualCost = parseFloat((totalMonthlyCost * 12).toFixed(2));
-        console.log('total Annual Cost', totalAnnualCost);
 
         let netRatio = parseFloat(((annualIncome - totalAnnualCost) / (listingPrice + additionalCosts) * 100).toFixed(2));
-
-        console.log('net ratio', netRatio);
 
         const urlEntry = Object.entries(dict)
           .find(([key, value]) => key.includes('URL'));
@@ -109,7 +97,6 @@ const FileUploader = ({ setData }) => {
         let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'DOWNPAYMENT': downPayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'URL': url };
 
         parsedData.push(parsedRow);
-        console.log('-------------');
       }
     }
     );

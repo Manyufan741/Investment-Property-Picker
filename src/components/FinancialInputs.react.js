@@ -9,12 +9,13 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
     const { name, value } = event.target;
     switch (name) {
       case 'traditionalMortgageRate':
-        let newTraditionalMortgageRate = 0;
-        if (!value) {
-          newTraditionalMortgageRate = 0;
-        } else {
-          newTraditionalMortgageRate = parseFloat(value);
-        }
+        // let newTraditionalMortgageRate = 0;
+        // if (!value) {
+        //   newTraditionalMortgageRate = 0;
+        // } else {
+        //   newTraditionalMortgageRate = parseFloat(value);
+        // }
+        let newTraditionalMortgageRate = parseFloat(value);
         setTraditionalMortgageRate(newTraditionalMortgageRate);
         setData(data.map((row) => {
           let monthlyTraditionalMortgageInterest = calculateMonthlyTraditionalMortgagePayment(30, newTraditionalMortgageRate, row.traditionalMortgageAmount);
@@ -27,12 +28,13 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
         }));
         break;
       case 'downpayment':
-        let newDownpayment = 0;
-        if (!value) {
-          newDownpayment = 0;
-        } else {
-          newDownpayment = parseFloat(value);
-        }
+        // let newDownpayment = 0;
+        // if (!value) {
+        //   newDownpayment = 0;
+        // } else {
+        //   newDownpayment = parseFloat(value);
+        // }
+        let newDownpayment = parseFloat(value);
         setDownpayment(newDownpayment);
         setData(data.map((row) => {
           // Extra downpayment would be used on taking away traditional mortgage, until it goes to zero.
@@ -47,12 +49,14 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
         }));
         break;
       case 'additionalCosts':
-        let newAdditionalCosts = additionalCosts;
-        if (!event.target.value) {
-          newAdditionalCosts = additionalCosts;
-        } else {
-          newAdditionalCosts = parseFloat(event.target.value);
-        }
+        // let newAdditionalCosts = additionalCosts;
+        // if (!event.target.value) {
+        //   newAdditionalCosts = additionalCosts;
+        // } else {
+        //   newAdditionalCosts = parseFloat(event.target.value);
+        // }
+
+        let newAdditionalCosts = parseFloat(value);
 
         // Updated additional costs would be calculated towards extra amount of traditional loan
         setAdditionalCosts(newAdditionalCosts);

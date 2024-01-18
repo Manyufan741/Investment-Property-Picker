@@ -98,9 +98,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 	return (
 		<div>
 			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
-				<img src={Bluey} alt="Cute" style={{ width: "8%", height: "auto" }} />
+				<img src={Bluey} alt="Cute" style={{ width: "7%", height: "auto" }} />
 				<h3>Property Details Breakdown</h3>
-				<img src={Bingo} alt="Cute" style={{ width: "8%", height: "auto" }} />
+				<img src={Bingo} alt="Cute" style={{ width: "7%", height: "auto" }} />
 			</div>
 			{
 				data.length > 0 && (

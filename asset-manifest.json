@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/Investment-Property-Picker/static/css/main.73de823b.css",
-    "main.js": "/Investment-Property-Picker/static/js/main.a8bf0a3e.js",
+    "main.js": "/Investment-Property-Picker/static/js/main.ef078e75.js",
     "static/js/787.ab8d4dcc.chunk.js": "/Investment-Property-Picker/static/js/787.ab8d4dcc.chunk.js",
     "static/media/bluey.webp": "/Investment-Property-Picker/static/media/bluey.0bbf4f91733f3e2f2385.webp",
     "static/media/Bluey.png": "/Investment-Property-Picker/static/media/Bluey.090e4f9db13b3effaad3.png",
     "static/media/Bingo.png": "/Investment-Property-Picker/static/media/Bingo.dfe11837c0bf6791b35d.png",
     "index.html": "/Investment-Property-Picker/index.html",
     "main.73de823b.css.map": "/Investment-Property-Picker/static/css/main.73de823b.css.map",
-    "main.a8bf0a3e.js.map": "/Investment-Property-Picker/static/js/main.a8bf0a3e.js.map",
+    "main.ef078e75.js.map": "/Investment-Property-Picker/static/js/main.ef078e75.js.map",
     "787.ab8d4dcc.chunk.js.map": "/Investment-Property-Picker/static/js/787.ab8d4dcc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.73de823b.css",
-    "static/js/main.a8bf0a3e.js"
+    "static/js/main.ef078e75.js"
   ]
 }

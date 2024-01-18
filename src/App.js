@@ -7,6 +7,7 @@ import FileUploader from './components/FileUploader.react.js';
 import FinancialInputs from './components/FinancialInputs.react.js';
 import PropertyTable from './components/PropertyTable.react.js';
 import ExportButton from './components/ExportButton.react.js';
+import CheckBox from './components/CheckBox.react.js';
 
 import bluey from './images/bluey.webp';
 
@@ -15,6 +16,7 @@ function App() {
   const [traditionalMortgageRate, setTraditionalMortgageRate] = useState(7);
   const [downpayment, setDownpayment] = useState(250000);
   const [additionalCosts, setAdditionalCosts] = useState(20000);
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <div className="App">
@@ -23,7 +25,9 @@ function App() {
         <hr />
         <Row>
           <Col md={2}>
-            <FileUploader setData={setData} />
+            <CheckBox isChecked={isChecked} setIsChecked={setIsChecked} />
+            <br />
+            <FileUploader setData={setData} isChecked={isChecked} setIsChecked={setIsChecked} />
             <hr />
             <FinancialInputs data={data} setData={setData} traditionalMortgageRate={traditionalMortgageRate} setTraditionalMortgageRate={setTraditionalMortgageRate} downpayment={downpayment} setDownpayment={setDownpayment} additionalCosts={additionalCosts} setAdditionalCosts={setAdditionalCosts} />
             <br />

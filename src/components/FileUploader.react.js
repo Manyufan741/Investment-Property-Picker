@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { Form, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,7 +23,7 @@ const propertyTaxRateMap = {
   'Picacho': 0.81 * 0.01,
 }
 
-const FileUploader = ({ setData }) => {
+const FileUploader = ({ setData, isChecked, setIsChecked }) => {
   // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState(null);
 
@@ -37,6 +37,7 @@ const FileUploader = ({ setData }) => {
       return;
     }
     setFile(uploadedFile);
+    setIsChecked(false);
     // Read file content using FileReader API
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -102,6 +103,23 @@ const FileUploader = ({ setData }) => {
     );
     return parsedData;
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.PUBLIC_URL}/data/preloaded_data.csv`);
+        const rawData = await response.text();
+        const csvData = parseCSV(rawData);
+        setData(csvData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    if (isChecked) {
+      fetchData();
+    }
+  }, [isChecked]); // Run the effect when usePreloadedData changes
 
   return (
     <Card>

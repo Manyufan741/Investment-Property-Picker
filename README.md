@@ -2,13 +2,17 @@
 
 A side project for picking investment property. This project should be able to help users to better understand how their properties spar with each other under the same financial specs. The goal is to help users to pick the best property in the table as an investment.
 
-Run Book:
+## Run Book:
 
 - Users should use [Redfin](https://www.redfin.com/) to export an Excel sheet for this project.
+
+    - While using mobile devices, having a exported Excel sheet might be difficult. Check the "Use Preloaded Data" box the directly load pre-existed data from the database.
 
 - Upload the exported file into the project. The tool should render a table with all the properties' information along side the estimated rent and net ratio of each property.
 
 - Users can adjust the interest rate, downpayment amount, additional one time cost, etc. and see real-time net ratio that reflects their financial settings.
+
+- Users can also adjust the property tax, home insurance and property management fee for each property inline. These adjustments would also affect the net ratio on the fly.
 
 # Getting Started with Create React App
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { Form, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/table.css";
+import "../styles/finSpec.css";
 
 import { calculateMonthlyTraditionalMortgagePayment } from "../utils/Utils.js";
 
@@ -123,11 +123,11 @@ const FileUploader = ({ setData, isChecked, setIsChecked }) => {
 
   return (
     <Card>
-      <Card.Body>
+      <Card.Body className="card">
         <Form>
           <Form.Group controlId="file-upload">
-            <Form.Label><b>Upload</b> Property Specs List:</Form.Label>
-            <Form.Control type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
+            <Form.Label><b>Upload</b></Form.Label>
+            <Form.Control className="file-upload-block" type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
           </Form.Group>
         </Form>
       </Card.Body>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Card } from "react-bootstrap";
+import { Row, Col, Form, Card } from "react-bootstrap";
 
 import { calculateMonthlyTraditionalMortgagePayment } from "../utils/Utils.js";
+import "../styles/finSpec.css";
 
 const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditionalMortgageRate, downpayment, setDownpayment, additionalCosts, setAdditionalCosts }) => {
 
@@ -9,12 +10,6 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
     const { name, value } = event.target;
     switch (name) {
       case 'traditionalMortgageRate':
-        // let newTraditionalMortgageRate = 0;
-        // if (!value) {
-        //   newTraditionalMortgageRate = 0;
-        // } else {
-        //   newTraditionalMortgageRate = parseFloat(value);
-        // }
         let newTraditionalMortgageRate = parseFloat(value);
         setTraditionalMortgageRate(newTraditionalMortgageRate);
         setData(data.map((row) => {
@@ -28,12 +23,6 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
         }));
         break;
       case 'downpayment':
-        // let newDownpayment = 0;
-        // if (!value) {
-        //   newDownpayment = 0;
-        // } else {
-        //   newDownpayment = parseFloat(value);
-        // }
         let newDownpayment = parseFloat(value);
         setDownpayment(newDownpayment);
         setData(data.map((row) => {
@@ -49,13 +38,6 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
         }));
         break;
       case 'additionalCosts':
-        // let newAdditionalCosts = additionalCosts;
-        // if (!event.target.value) {
-        //   newAdditionalCosts = additionalCosts;
-        // } else {
-        //   newAdditionalCosts = parseFloat(event.target.value);
-        // }
-
         let newAdditionalCosts = parseFloat(value);
 
         // Updated additional costs would be calculated towards extra amount of traditional loan
@@ -79,55 +61,65 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
 
   return (
     <div>
-      <h4>↓ Financial Specs ↓</h4>
-      <Card>
-        <Card.Body>
-          <Form>
-            <Form.Group controlId="traditionalMortgageRate">
-              <Form.Label>Traditional Mortgage Interest Rate</Form.Label>
-              <Form.Control
-                type="number"
-                name="traditionalMortgageRate"
-                value={traditionalMortgageRate}
-                onChange={handleChange}
-                min={0}
-                max={100}
-                step={0.01}
-              />
-              <Form.Text className="text-muted">%</Form.Text>
-            </Form.Group>
-          </Form>
-        </Card.Body>
-      </Card>
-      <br />
-      <Card>
-        <Card.Body>
-          <Form>
-            <Form.Group controlId="downpayment">
-              <Form.Label>Downpayment</Form.Label>
-              <Form.Control type="number" name="downpayment" value={downpayment} onChange={handleChange} />
-              <Form.Text className="text-muted">USD</Form.Text>
-            </Form.Group>
-          </Form>
-        </Card.Body>
-      </Card>
-      <br />
-      <Card>
-        <Card.Body>
-          <Form>
-            <Form.Group controlId="additionalCosts">
-              <Form.Label>Additional One Time Cost</Form.Label>
-              <Form.Control
-                type="number"
-                name="additionalCosts"
-                value={additionalCosts}
-                onChange={handleChange}
-              />
-              <Form.Text className="text-muted">USD</Form.Text>
-            </Form.Group>
-          </Form>
-        </Card.Body>
-      </Card>
+      <Row>
+        <h4 className="financial-heading">↓ Financial Specs ↓</h4>
+      </Row>
+      <hr />
+      <Row>
+        <Col xs={4} md={4}>
+          <Card>
+            <Card.Body className="card">
+              <Form>
+                <Form.Group controlId="traditionalMortgageRate">
+                  <Form.Label>貸款利率</Form.Label>
+                  <Form.Control className="financial-font-size"
+                    type="number"
+                    name="traditionalMortgageRate"
+                    value={traditionalMortgageRate}
+                    onChange={handleChange}
+                    min={0}
+                    max={100}
+                    step={0.01}
+                  />
+                  <Form.Text>%</Form.Text>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col xs={4} md={4}>
+          <Card>
+            <Card.Body className="card">
+              <Form>
+                <Form.Group controlId="downpayment">
+                  <Form.Label>首付</Form.Label>
+                  <Form.Control className="financial-font-size" type="number" name="downpayment" value={downpayment} onChange={handleChange} />
+                  <Form.Text>USD</Form.Text>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col xs={4} md={4}>
+          <Card>
+            <Card.Body className="card">
+              <Form>
+                <Form.Group controlId="additionalCosts">
+                  <Form.Label>額外一次性開銷</Form.Label>
+                  <Form.Control
+                    className="financial-font-size"
+                    type="number"
+                    name="additionalCosts"
+                    value={additionalCosts}
+                    onChange={handleChange}
+                  />
+                  <Form.Text>USD</Form.Text>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import * as XLSX from 'xlsx';
 import { Button } from "react-bootstrap";
+import "../styles/button.css";
 
 const ExportButton = ({ data }) => {
   const handleExport = () => {
@@ -12,7 +13,7 @@ const ExportButton = ({ data }) => {
   };
 
   return (
-    <Button onClick={handleExport}>Export to Excel</Button>
+    <Button onClick={handleExport} className="button">Export to Excel</Button>
   );
 };
 

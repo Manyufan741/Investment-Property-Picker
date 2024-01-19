@@ -1,0 +1,18 @@
+.button {
+    width: 10%;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    padding: 4px 0px 4px 0px;
+}
+
+@media (max-width: 900px) {
+    .button {
+        width: 15%;
+        font-size: 0.8rem;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: auto;
+        padding: 4px 0px 4px 0px;
+    }
+}

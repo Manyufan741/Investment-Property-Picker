@@ -1,0 +1,65 @@
+.card {
+    width: 100%;
+    padding: 2px 2px 2px 2px;
+    align-items: center;
+}
+
+.financial-heading {
+    font-size: 1.5rem;
+}
+
+.financial-font-size {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    text-align: center;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.file-upload-block {
+    text-align: center;
+    width: 100%;
+    font-size: 1rem;
+}
+
+/* Media query for smaller screens (adjust as needed) */
+@media (max-width: 576px) {
+    .card {
+        width: 100%;
+        font-size: 0.8rem;
+        /* Adjust card width for smaller screens */
+        align-items: center;
+        margin: 0px 0px 0px 0px;
+        /* Top Right Bot Left */
+        padding: 0px 0px 0px 0px;
+    }
+
+    .financial-heading {
+        font-size: 1rem;
+        /* Adjust font size for smaller screens */
+    }
+
+    .financial-font-size {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+        text-align: center;
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    .file-upload-block {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+        text-align: center;
+        width: 100%;
+        font-size: 0.7rem;
+    }
+
+    .checkbox {
+        margin: 4px 4px 0px 14px;
+        padding: 0;
+        text-align: center;
+        width: 105%;
+        font-size: 0.85rem;
+    }
+}

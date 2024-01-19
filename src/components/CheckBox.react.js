@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import "../styles/finSpec.css";
 
 const CheckBox = ({ isChecked, setIsChecked }) => {
     const handleChange = (event) => {
@@ -8,10 +9,10 @@ const CheckBox = ({ isChecked, setIsChecked }) => {
 
     return (
         <Form>
-            <Form.Check
+            <Form.Check className="checkbox"
                 type="checkbox"
                 id="myCheckbox"
-                label="Check to Use Preloaded Data"
+                label="使用已儲存的資料"
                 checked={isChecked}
                 onChange={handleChange}
             />

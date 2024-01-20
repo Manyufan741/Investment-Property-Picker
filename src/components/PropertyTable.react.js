@@ -115,6 +115,13 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 									<th>Beds & Baths</th>
 									<th>Sqft</th>
 									<th>Lot Size</th>
+									<th>Year Built</th>
+									<th onClick={() => handleSort("daysOnMarket")}>
+										Days on Market
+										{sortField === "daysOnMarket" && sortDirection === "asc" && <span> ↑ </span>}
+										{sortField === "daysOnMarket" && sortDirection === "desc" && <span> ↓ </span>}
+									</th>
+									<th>$/Sqft</th>
 									<th className="monthly-cost-cells">Monthly Traditional Mortgage Interest</th>
 									<th className="monthly-cost-cells">Monthly Property Tax (月房產稅)</th>
 									<th className="monthly-cost-cells">Monthly HOA</th>
@@ -143,6 +150,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										<td>{row.BEDS}b{row.BATHS}b</td>
 										<td>{row.SQUAREFEET}</td>
 										<td>{row.LOTSIZE}</td>
+										<td>{row.yearBuilt}</td>
+										<td>{row.daysOnMarket}</td>
+										<td>{row.perSqft}</td>
 										<td className="monthly-cost-cells">{row.monthlyTraditionalMortgageInterest}</td>
 										<td className="monthly-cost-cells">{<EditableCell value={row.monthlyPropertyTax} onValueChange={(newPropertyTax) => handlePropertyTaxChange(index, newPropertyTax)} />}</td>
 										<td className="monthly-cost-cells">{row.monthlyHOA}</td>

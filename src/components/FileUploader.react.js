@@ -95,7 +95,7 @@ const FileUploader = ({ setData, isChecked, setIsChecked }) => {
           url = urlEntry[1];
         }
 
-        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'DOWNPAYMENT': downPayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'URL': url };
+        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downPayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'URL': url };
 
         parsedData.push(parsedRow);
       }

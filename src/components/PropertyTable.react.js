@@ -40,6 +40,15 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		// Recalculate netRatio for the updated row
 		const row = newData[index];
 
+
+		// Property managed by Las Vegas agent take 8% of the monthly rent as commission
+		if (row.CITY === 'Las Vegas') {
+			let newManagementFee = parseFloat((newRent * 0.08).toFixed(2));
+			newData[index].monthlyManagementFee = newManagementFee;
+
+			newData[index].totalMonthlyCost = parseFloat((row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + newManagementFee).toFixed(2));
+		}
+
 		let netRatio = parseFloat((((newRent - (row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee)) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
 
 		newData[index].netRatio = netRatio;

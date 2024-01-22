@@ -21,6 +21,7 @@ const propertyTaxRateMap = {
   'Tempe': 0.55 * 0.01,
   'Sun City West': 0.69 * 0.01,
   'Picacho': 0.81 * 0.01,
+  'Las Vegas': 0.64 * 0.01,
 }
 
 const FileUploader = ({ setData, isChecked, setIsChecked }) => {
@@ -72,6 +73,7 @@ const FileUploader = ({ setData, isChecked, setIsChecked }) => {
         let monthlyTraditionalMortgageInterest = calculateMonthlyTraditionalMortgagePayment(30, traditionalMortgageInterestRate, traditionalMortgageAmount);
         let homeInsurance = 170;
         let managementFee = 120;
+
         // ------------------------------------------------------------------------
 
         let monthlyPropertyTax = parseFloat((listingPrice * (propertyTaxRateMap[dict['CITY']] ?? 0.51 * 0.01) / 12).toFixed(2));
@@ -93,6 +95,10 @@ const FileUploader = ({ setData, isChecked, setIsChecked }) => {
 
         if (urlEntry) {
           url = urlEntry[1];
+        }
+
+        if (dict['CITY'] === 'Las Vegas') {
+          managementFee = parseFloat((estimatedRent * 0.08).toFixed(2));
         }
 
         let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downPayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'URL': url };

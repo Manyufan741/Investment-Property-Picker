@@ -14,6 +14,12 @@ A side project for picking investment property. This project should be able to h
 
 - Users can also adjust the property tax, home insurance and property management fee for each property inline. These adjustments would also affect the net ratio on the fly.
 
+## Git note for myself (steps to push the diff to Github and deploy it)
+- git add .
+- git commit -m "yadayada"
+- git push origin main 
+- npm run deploy
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

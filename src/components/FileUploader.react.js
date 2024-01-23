@@ -69,13 +69,13 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
         let traditionalMortgageAmount = listingPrice + additionalCosts - downpayment;
         let monthlyTraditionalMortgageInterest = calculateMonthlyTraditionalMortgagePayment(30, traditionalMortgageRate, traditionalMortgageAmount);
         let homeInsurance = 170;
-        let managementFee = 120;
+        let managementFee = 80;
 
         // ------------------------------------------------------------------------
 
         let monthlyPropertyTax = parseFloat((listingPrice * (propertyTaxRateMap[dict['CITY']] ?? 0.51 * 0.01) / 12).toFixed(2));
 
-        let estimatedRent = parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2));
+        let estimatedRent = parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2)) + 200;
         let annualIncome = estimatedRent * 12;
         let monthlyHOA = parseFloat(dict['HOA/MONTH'] === null ? 0 : parseFloat(dict['HOA/MONTH']));
 

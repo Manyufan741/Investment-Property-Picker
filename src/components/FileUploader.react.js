@@ -24,7 +24,7 @@ const propertyTaxRateMap = {
   'Las Vegas': 0.64 * 0.01,
 }
 
-const FileUploader = ({ setData, isChecked, setIsChecked }) => {
+const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRate, downpayment, additionalCosts }) => {
   // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState(null);
 
@@ -65,12 +65,9 @@ const FileUploader = ({ setData, isChecked, setIsChecked }) => {
         /**
          * These parameters are just initial values. They will be overwritten by the users through FinancialInputs 
          */
-        let downPayment = 250000;
-        let additionalCosts = 20000;
 
-        let traditionalMortgageAmount = listingPrice + additionalCosts - downPayment;
-        let traditionalMortgageInterestRate = 7;
-        let monthlyTraditionalMortgageInterest = calculateMonthlyTraditionalMortgagePayment(30, traditionalMortgageInterestRate, traditionalMortgageAmount);
+        let traditionalMortgageAmount = listingPrice + additionalCosts - downpayment;
+        let monthlyTraditionalMortgageInterest = calculateMonthlyTraditionalMortgagePayment(30, traditionalMortgageRate, traditionalMortgageAmount);
         let homeInsurance = 170;
         let managementFee = 120;
 
@@ -86,7 +83,9 @@ const FileUploader = ({ setData, isChecked, setIsChecked }) => {
 
         let totalAnnualCost = parseFloat((totalMonthlyCost * 12).toFixed(2));
 
-        let netRatio = parseFloat(((annualIncome - totalAnnualCost) / (listingPrice + additionalCosts) * 100).toFixed(2));
+        let netRatio = parseFloat(((annualIncome - totalAnnualCost) / (downpayment + additionalCosts) * 100).toFixed(2));
+
+        let capRate = parseFloat(((annualIncome - totalAnnualCost) / (listingPrice + additionalCosts) * 100).toFixed(2));
 
         const urlEntry = Object.entries(dict)
           .find(([key, value]) => key.includes('URL'));
@@ -101,7 +100,7 @@ const FileUploader = ({ setData, isChecked, setIsChecked }) => {
           managementFee = parseFloat((estimatedRent * 0.08).toFixed(2));
         }
 
-        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downPayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'URL': url };
+        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downpayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'capRate': capRate, 'URL': url };
 
         parsedData.push(parsedRow);
       }

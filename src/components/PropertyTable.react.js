@@ -10,7 +10,7 @@ import Bingo from "../images/Bingo.png";
 
 const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageRate, downpayment, additionalCosts }) => {
 	const [sortField, setSortField] = useState("netRatio");
-	const [sortDirection, setSortDirection] = useState("asc");
+	const [sortDirection, setSortDirection] = useState("desc");
 
 	const handleSort = (field) => {
 		const newSortField = field;
@@ -40,6 +40,13 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		// Recalculate netRatio for the updated row
 		const row = newData[index];
 
+		let netRatio = parseFloat((((newRent - (row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee)) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
+
+		newData[index].netRatio = netRatio;
+
+		let capRate = parseFloat((((newRent - (row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee)) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+
+		newData[index].capRate = capRate;
 
 		// Property managed by Las Vegas agent take 8% of the monthly rent as commission
 		if (row.CITY === 'Las Vegas') {
@@ -47,11 +54,15 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 			newData[index].monthlyManagementFee = newManagementFee;
 
 			newData[index].totalMonthlyCost = parseFloat((row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + newManagementFee).toFixed(2));
+
+			netRatio = parseFloat((((newRent - newData[index].totalMonthlyCost) / (downpayment + additionalCosts)) * 100).toFixed(2));
+
+			newData[index].netRatio = netRatio;
+
+			capRate = parseFloat((((newRent - newData[index].totalMonthlyCost) / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+
+			newData[index].capRate = capRate;
 		}
-
-		let netRatio = parseFloat((((newRent - (row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee)) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
-
-		newData[index].netRatio = netRatio;
 
 		setData(newData);
 	};
@@ -65,9 +76,13 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		newData[index].totalMonthlyCost = row.monthlyTraditionalMortgageInterest + newPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee;
 
 		// Recalculate netRatio for the updated row
-		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
 
 		newData[index].netRatio = netRatio;
+
+		let capRate = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+
+		newData[index].capRate = capRate;
 
 		setData(newData);
 	};
@@ -81,9 +96,13 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		newData[index].totalMonthlyCost = row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + newMonthlyHomeInsurance + row.monthlyManagementFee;
 
 		// Recalculate netRatio for the updated row
-		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
 
 		newData[index].netRatio = netRatio;
+
+		let capRate = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+
+		newData[index].capRate = capRate;
 
 		setData(newData);
 	};
@@ -97,9 +116,13 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		newData[index].totalMonthlyCost = row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + newMonthlyManagementFee;
 
 		// Recalculate netRatio for the updated row
-		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
 
 		newData[index].netRatio = netRatio;
+
+		let capRate = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
+
+		newData[index].capRate = capRate;
 
 		setData(newData);
 	};
@@ -107,9 +130,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 	return (
 		<div>
 			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
-				<img src={Bluey} alt="Cute" style={{ width: "7%", height: "auto" }} />
+				<img src={Bluey} alt="Cute" style={{ width: "5%", height: "auto" }} />
 				<h3>Property Details Breakdown</h3>
-				<img src={Bingo} alt="Cute" style={{ width: "7%", height: "auto" }} />
+				<img src={Bingo} alt="Cute" style={{ width: "5%", height: "auto" }} />
 			</div>
 			{
 				data.length > 0 && (
@@ -139,9 +162,14 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 									<th className="monthly-cost-cells">Total Monthly Cost</th>
 									<th>Estimated Monthly Rent(預估月租)</th>
 									<th onClick={() => handleSort("netRatio")}>
-										Net Ratio(出租回報率)
+										Net Ratio(年收益/首付)
 										{sortField === "netRatio" && sortDirection === "asc" && <span> ↑ </span>}
 										{sortField === "netRatio" && sortDirection === "desc" && <span> ↓ </span>}
+									</th>
+									<th onClick={() => handleSort("capRate")}>
+										Cap Rate(年收益/房價)
+										{sortField === "capRate" && sortDirection === "asc" && <span> ↑ </span>}
+										{sortField === "capRate" && sortDirection === "desc" && <span> ↓ </span>}
 									</th>
 								</tr>
 							</thead>
@@ -170,6 +198,7 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										<td className="monthly-cost-cells">{row.totalMonthlyCost}</td>
 										<td>{<EditableCell value={row.estimatedRent} onValueChange={(newRent) => handleRentChange(index, newRent)} />}</td>
 										<td>{row.netRatio} %</td>
+										<td>{row.capRate} %</td>
 									</tr>
 								))}
 							</tbody>

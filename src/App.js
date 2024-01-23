@@ -12,7 +12,7 @@ import CheckBox from './components/CheckBox.react.js';
 function App() {
   const [data, setData] = useState([]);
   const [traditionalMortgageRate, setTraditionalMortgageRate] = useState(7);
-  const [downpayment, setDownpayment] = useState(250000);
+  const [downpayment, setDownpayment] = useState(260000);
   const [additionalCosts, setAdditionalCosts] = useState(20000);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -25,7 +25,7 @@ function App() {
           <Col xs={3} md={3}>
             <CheckBox isChecked={isChecked} setIsChecked={setIsChecked} />
             <br />
-            <FileUploader setData={setData} isChecked={isChecked} setIsChecked={setIsChecked} />
+            <FileUploader setData={setData} isChecked={isChecked} setIsChecked={setIsChecked} traditionalMortgageRate={traditionalMortgageRate} downpayment={downpayment} additionalCosts={additionalCosts} />
           </Col>
           <Col xs={9} md={9}>
             <FinancialInputs data={data} setData={setData} traditionalMortgageRate={traditionalMortgageRate} setTraditionalMortgageRate={setTraditionalMortgageRate} downpayment={downpayment} setDownpayment={setDownpayment} additionalCosts={additionalCosts} setAdditionalCosts={setAdditionalCosts} />

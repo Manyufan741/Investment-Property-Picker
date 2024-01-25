@@ -166,11 +166,11 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										{sortField === "netRatio" && sortDirection === "asc" && <span> ↑ </span>}
 										{sortField === "netRatio" && sortDirection === "desc" && <span> ↓ </span>}
 									</th>
-									<th onClick={() => handleSort("capRate")}>
+									{/* <th onClick={() => handleSort("capRate")}>
 										Cap Rate(年收益/房價)
 										{sortField === "capRate" && sortDirection === "asc" && <span> ↑ </span>}
 										{sortField === "capRate" && sortDirection === "desc" && <span> ↓ </span>}
-									</th>
+									</th> */}
 								</tr>
 							</thead>
 							<tbody>
@@ -198,7 +198,7 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										<td className="monthly-cost-cells">{row.totalMonthlyCost}</td>
 										<td>{<EditableCell value={row.estimatedRent} onValueChange={(newRent) => handleRentChange(index, newRent)} />}</td>
 										<td style={{ borderLeft: "3px solid red", borderRight: "3px solid red" }}><b>{row.netRatio} %</b></td>
-										<td>{row.capRate} %</td>
+										{/* <td>{row.capRate} %</td> */}
 									</tr>
 								))}
 							</tbody>

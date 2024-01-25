@@ -1,6 +1,8 @@
 # Investment-Property-Picker
 
-A side project for picking investment property. This project should be able to help users to better understand how their properties spar with each other under the same financial specs. The goal is to help users to pick the best property in the table as an investment.
+A side project for picking investment property. This project aims to help users to better understand how their targeted properties spar with each other under the same financial specs. 
+
+The ultimate goal is to help users to pick the best property in the table as an investment.
 
 ## Run Book:
 

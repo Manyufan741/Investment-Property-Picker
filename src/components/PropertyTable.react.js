@@ -197,7 +197,7 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										<td className="monthly-cost-cells">{<EditableCell value={row.monthlyManagementFee} onValueChange={(newMonthlyManagementFee) => handleMonthlyManagementFeeChange(index, newMonthlyManagementFee)} />}</td>
 										<td className="monthly-cost-cells">{row.totalMonthlyCost}</td>
 										<td>{<EditableCell value={row.estimatedRent} onValueChange={(newRent) => handleRentChange(index, newRent)} />}</td>
-										<td style={{ borderLeft: "3px solid red", borderRight: "3px solid red" }}>{row.netRatio} %</td>
+										<td style={{ borderLeft: "3px solid red", borderRight: "3px solid red" }}><b>{row.netRatio} %</b></td>
 										<td>{row.capRate} %</td>
 									</tr>
 								))}

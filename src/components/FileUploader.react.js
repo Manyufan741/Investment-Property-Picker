@@ -75,7 +75,11 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
 
         let monthlyPropertyTax = parseFloat((listingPrice * (propertyTaxRateMap[dict['CITY']] ?? 0.51 * 0.01) / 12).toFixed(2));
 
-        let estimatedRent = parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2)) + 200;
+        // Peoria has better rent/sqft ratio
+        let estimatedRent = (dict['CITY'].toLowerCase() === 'peoria')
+          ? parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2)) + 200
+          : parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2));
+
         let annualIncome = estimatedRent * 12;
         let monthlyHOA = parseFloat(dict['HOA/MONTH'] === null ? 0 : parseFloat(dict['HOA/MONTH']));
 

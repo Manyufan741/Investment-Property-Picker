@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { calculateMonthlyTraditionalMortgagePayment } from "../utils/Utils.js";
+import { propertyTaxRateMap } from "../utils/Consts.js";
 
 import EditableCell from "./EditableCell.react.js";
 
@@ -63,6 +65,40 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 
 			newData[index].capRate = capRate;
 		}
+
+		setData(newData);
+	};
+
+	const handleListingPriceChange = (index, newListingPrice) => {
+		const newData = [...data];
+		newData[index].PRICE = newListingPrice;
+		const row = newData[index];
+
+		// Recalculate mortgage amount and monthly mortgage interest
+		let newTraditionalMortgageAmount = newListingPrice + additionalCosts - downpayment;
+		let newMonthlyTraditionalMortgageInterest = calculateMonthlyTraditionalMortgagePayment(30, traditionalMortgageRate, newTraditionalMortgageAmount);
+
+		newData[index].traditionalMortgageAmount = newTraditionalMortgageAmount;
+		newData[index].monthlyTraditionalMortgageInterest = newMonthlyTraditionalMortgageInterest
+
+		// Recalculate $/sqft
+		newData[index].perSqft = parseInt(newListingPrice / row.SQUAREFEET);
+
+		// Recalculate property tax
+		let newMonthlyPropertyTax = parseFloat((newListingPrice * (propertyTaxRateMap[row.CITY] ?? 0.51 * 0.01) / 12).toFixed(2));
+		newData[index].monthlyPropertyTax = newMonthlyPropertyTax
+
+		// Recalculate total monthly cost for the updated row
+		newData[index].totalMonthlyCost = newMonthlyTraditionalMortgageInterest + newMonthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee;
+
+		// Recalculate netRatio for the updated row
+		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
+
+		newData[index].netRatio = netRatio;
+
+		let capRate = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (newListingPrice + additionalCosts)) * 100).toFixed(2));
+
+		newData[index].capRate = capRate;
 
 		setData(newData);
 	};
@@ -183,7 +219,8 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										</td>
 										<td>{row.CITY}</td>
 										<td>{row.POSTALCODE}</td>
-										<td>${row.PRICE}</td>
+										{/* <td>${row.PRICE}</td> */}
+										<td className="monthly-cost-cells">{<EditableCell value={row.PRICE} onValueChange={(newListingPrice) => handleListingPriceChange(index, newListingPrice)} />}</td>
 										<td>{row.BEDS}b{row.BATHS}b</td>
 										<td>{row.SQUAREFEET}</td>
 										<td>{row.LOTSIZE}</td>

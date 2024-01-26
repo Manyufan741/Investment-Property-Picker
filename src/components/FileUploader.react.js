@@ -5,24 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/finSpec.css";
 
 import { calculateMonthlyTraditionalMortgagePayment } from "../utils/Utils.js";
-
-const propertyTaxRateMap = {
-  'Anthem': 0.79 * 0.01,
-  'Phoenix': 0.64 * 0.01,
-  'Peoria': 0.67 * 0.01,
-  'Chandler': 0.58 * 0.01,
-  'Laveen': 0.73 * 0.01,
-  'Glendale': 0.68 * 0.01,
-  'Mesa': 0.59 * 0.01,
-  'Queen Creek': 0.60 * 0.01,
-  'Gilbert': 0.57 * 0.01,
-  'Sun City': 0.75 * 0.01,
-  'New River': 0.72 * 0.01,
-  'Tempe': 0.55 * 0.01,
-  'Sun City West': 0.69 * 0.01,
-  'Picacho': 0.81 * 0.01,
-  'Las Vegas': 0.64 * 0.01,
-}
+import { propertyTaxRateMap } from "../utils/Consts.js";
 
 const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRate, downpayment, additionalCosts }) => {
   // eslint-disable-next-line no-unused-vars

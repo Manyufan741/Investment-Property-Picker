@@ -11,9 +11,9 @@ import CheckBox from './components/CheckBox.react.js';
 
 function App() {
   const [data, setData] = useState([]);
-  const [traditionalMortgageRate, setTraditionalMortgageRate] = useState(7);
+  const [traditionalMortgageRate, setTraditionalMortgageRate] = useState(6.625);
   const [downpayment, setDownpayment] = useState(260000);
-  const [additionalCosts, setAdditionalCosts] = useState(20000);
+  const [additionalCosts, setAdditionalCosts] = useState(10000);
   const [isChecked, setIsChecked] = useState(false);
 
   return (

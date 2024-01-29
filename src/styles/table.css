@@ -1,5 +1,5 @@
 .table-container {
-  overflow: scroll;
+  overflow: auto;
   max-height: 85vh;
   /* Adjust height as needed */
 }
@@ -7,10 +7,8 @@
 .table-container th {
   position: sticky;
   top: 0;
-  left: 0;
   background-color: #b4d2f5;
   font-weight: bold;
-  z-index: 1;
   /* Sticky first row with z-index */
 }
 

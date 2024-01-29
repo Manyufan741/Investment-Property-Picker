@@ -166,14 +166,14 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 	return (
 		<div>
 			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10 }}>
-				<img src={Bluey} alt="Cute" style={{ width: "5%", height: "auto" }} />
+				<img src={Bluey} alt="Cute" style={{ width: "3%", height: "auto" }} />
 				<h3>Property Details Breakdown</h3>
-				<img src={Bingo} alt="Cute" style={{ width: "5%", height: "auto" }} />
+				<img src={Bingo} alt="Cute" style={{ width: "3%", height: "auto" }} />
 			</div>
 			{
 				data.length > 0 && (
 					<div className="table-container">
-						<Table striped bordered hover responsive>
+						<Table striped bordered hover responsive={true}>
 							<thead>
 								<tr>
 									<th>Address</th>
@@ -220,7 +220,7 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										<td>{row.CITY}</td>
 										<td>{row.POSTALCODE}</td>
 										{/* <td>${row.PRICE}</td> */}
-										<td className="monthly-cost-cells">{<EditableCell value={row.PRICE} onValueChange={(newListingPrice) => handleListingPriceChange(index, newListingPrice)} />}</td>
+										<td>{<EditableCell value={row.PRICE} onValueChange={(newListingPrice) => handleListingPriceChange(index, newListingPrice)} />}</td>
 										<td>{row.BEDS}b{row.BATHS}b</td>
 										<td>{row.SQUAREFEET}</td>
 										<td>{row.LOTSIZE}</td>

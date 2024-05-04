@@ -68,6 +68,8 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
 
         let totalMonthlyCost = parseFloat((monthlyTraditionalMortgageInterest + monthlyPropertyTax + monthlyHOA + homeInsurance + managementFee).toFixed(2));
 
+        let monthlyDepreciation = parseFloat((listingPrice * 0.8 / 27.5 / 12).toFixed(2));
+
         let totalAnnualCost = parseFloat((totalMonthlyCost * 12).toFixed(2));
 
         let netRatio = parseFloat(((annualIncome - totalAnnualCost) / (downpayment + additionalCosts) * 100).toFixed(2));
@@ -87,7 +89,7 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
           managementFee = parseFloat((estimatedRent * 0.08).toFixed(2));
         }
 
-        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downpayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'capRate': capRate, 'URL': url };
+        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downpayment, 'traditionalMortgageAmount': traditionalMortgageAmount, 'monthlyTraditionalMortgageInterest': monthlyTraditionalMortgageInterest, 'monthlyPropertyTax': monthlyPropertyTax, 'monthlyHOA': monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, 'totalMonthlyCost': totalMonthlyCost, 'monthlyDepreciation': monthlyDepreciation, 'estimatedRent': estimatedRent, 'netRatio': netRatio, 'capRate': capRate, 'URL': url };
 
         parsedData.push(parsedRow);
       }

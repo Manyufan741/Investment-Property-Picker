@@ -50,6 +50,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 
 		newData[index].capRate = capRate;
 
+		// Recalculate writeOffMargin
+		newData[index].writeOffMargin = parseFloat((newRent - (row.totalMonthlyCost + row.monthlyDepreciation)).toFixed(2));
+
 		// Property managed by Las Vegas agent take 8% of the monthly rent as commission
 		if (row.CITY === 'Las Vegas') {
 			let newManagementFee = parseFloat((newRent * 0.08).toFixed(2));
@@ -92,7 +95,11 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		newData[index].totalMonthlyCost = newMonthlyTraditionalMortgageInterest + newMonthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee;
 
 		// Recalculate monthly depreciation
-		newData[index].monthlyDepreciation = parseFloat((newListingPrice * 0.8 / 27.5 / 12).toFixed(2));
+		let newFCV = newListingPrice * 0.9;
+		newData[index].monthlyDepreciation = parseFloat((newFCV * 0.8 / 27.5 / 12).toFixed(2));
+
+		// Recalculate write off margin
+		newData[index].writeOffMargin = parseFloat((row.estimatedRent - (newData[index].totalMonthlyCost + newData[index].monthlyDepreciation)).toFixed(2));
 
 		// Recalculate netRatio for the updated row
 		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
@@ -114,6 +121,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		// Recalculate total monthly cost for the updated row
 		newData[index].totalMonthlyCost = row.monthlyTraditionalMortgageInterest + newPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee;
 
+		// Recalculate write off margin
+		newData[index].writeOffMargin = parseFloat((row.estimatedRent - (newData[index].totalMonthlyCost + row.monthlyDepreciation)).toFixed(2));
+
 		// Recalculate netRatio for the updated row
 		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
 
@@ -134,6 +144,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		// Recalculate total monthly cost for the updated row
 		newData[index].totalMonthlyCost = row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + newMonthlyHomeInsurance + row.monthlyManagementFee;
 
+		// Recalculate write off margin
+		newData[index].writeOffMargin = parseFloat((row.estimatedRent - (newData[index].totalMonthlyCost + row.monthlyDepreciation)).toFixed(2));
+
 		// Recalculate netRatio for the updated row
 		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
 
@@ -153,6 +166,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 
 		// Recalculate total monthly cost for the updated row
 		newData[index].totalMonthlyCost = row.monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + newMonthlyManagementFee;
+
+		// Recalculate write off margin
+		newData[index].writeOffMargin = parseFloat((row.estimatedRent - (newData[index].totalMonthlyCost + row.monthlyDepreciation)).toFixed(2));
 
 		// Recalculate netRatio for the updated row
 		let netRatio = parseFloat((((row.estimatedRent - newData[index].totalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
@@ -199,8 +215,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 									<th className="monthly-cost-cells">Monthly Home Insurance</th>
 									<th className="monthly-cost-cells">Monthly Management Fee</th>
 									<th className="monthly-cost-cells">Total Monthly Cost</th>
-									<th className="monthly-cost-cells">Monthly Depreciation(月折舊)</th>
+									<th className="tax-saving-cells">Monthly Depreciation(月折舊)</th>
 									<th>Estimated Monthly Rent(預估月租)</th>
+									<th className="tax-saving-cells">Write Off Margin(節稅邊際)</th>
 									<th style={{ borderLeft: "3px solid red", borderRight: "3px solid red", borderTop: "3px solid red" }} onClick={() => handleSort("netRatio")}>
 										Net Ratio(年收益/首付)
 										{sortField === "netRatio" && sortDirection === "asc" && <span> ↑ </span>}
@@ -237,8 +254,9 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										<td className="monthly-cost-cells">{<EditableCell value={row.monthlyHomeInsurance} onValueChange={(newMonthlyHomeInsurance) => handleMonthlyHomeInsuranceChange(index, newMonthlyHomeInsurance)} />}</td>
 										<td className="monthly-cost-cells">{<EditableCell value={row.monthlyManagementFee} onValueChange={(newMonthlyManagementFee) => handleMonthlyManagementFeeChange(index, newMonthlyManagementFee)} />}</td>
 										<td className="monthly-cost-cells">{row.totalMonthlyCost}</td>
-										<td className="monthly-cost-cells">{row.monthlyDepreciation}</td>
+										<td className="tax-saving-cells">{row.monthlyDepreciation}</td>
 										<td>{<EditableCell value={row.estimatedRent} onValueChange={(newRent) => handleRentChange(index, newRent)} />}</td>
+										<td className="tax-saving-cells">{row.writeOffMargin}</td>
 										<td style={{ borderLeft: "3px solid red", borderRight: "3px solid red" }}><b>{row.netRatio} %</b></td>
 										{/* <td>{row.capRate} %</td> */}
 									</tr>

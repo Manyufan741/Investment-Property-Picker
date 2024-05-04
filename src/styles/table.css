@@ -19,3 +19,7 @@
 .table-container .monthly-cost-cells {
   background-color: rgb(252, 193, 104);
 }
+
+.table-container .tax-saving-cells {
+  background-color: rgb(143, 213, 103);
+}

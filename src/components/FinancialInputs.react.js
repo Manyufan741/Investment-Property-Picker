@@ -17,11 +17,13 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
 
           let newTotalMonthlyCost = parseFloat((monthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee).toFixed(2));
 
+          let writeOffMargin = parseFloat((row.estimatedRent - (newTotalMonthlyCost + row.monthlyDepreciation)).toFixed(2));
+
           let netRatio = parseFloat((((row.estimatedRent - newTotalMonthlyCost) * 12 / (downpayment + additionalCosts)) * 100).toFixed(2));
 
           let capRate = parseFloat((((row.estimatedRent - newTotalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
 
-          return { ...row, monthlyTraditionalMortgageInterest, totalMonthlyCost: newTotalMonthlyCost, netRatio, capRate };
+          return { ...row, monthlyTraditionalMortgageInterest, totalMonthlyCost: newTotalMonthlyCost, writeOffMargin, netRatio, capRate };
         }));
         break;
       case 'downpayment':
@@ -34,11 +36,13 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
 
           let newTotalMonthlyCost = parseFloat((newMonthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee).toFixed(2));
 
+          let writeOffMargin = parseFloat((row.estimatedRent - (newTotalMonthlyCost + row.monthlyDepreciation)).toFixed(2));
+
           let netRatio = parseFloat((((row.estimatedRent - newTotalMonthlyCost) * 12 / (newDownpayment + additionalCosts)) * 100).toFixed(2));
 
           let capRate = parseFloat((((row.estimatedRent - newTotalMonthlyCost) * 12 / (row.PRICE + additionalCosts)) * 100).toFixed(2));
 
-          return { ...row, DOWNPAYMENT: newDownpayment, traditionalMortgageAmount: newTraditionalMortgageAmount, monthlyTraditionalMortgageInterest: newMonthlyTraditionalMortgageInterest, totalMonthlyCost: newTotalMonthlyCost, netRatio, capRate };
+          return { ...row, DOWNPAYMENT: newDownpayment, traditionalMortgageAmount: newTraditionalMortgageAmount, monthlyTraditionalMortgageInterest: newMonthlyTraditionalMortgageInterest, totalMonthlyCost: newTotalMonthlyCost, writeOffMargin, netRatio, capRate };
         }));
         break;
       case 'additionalCosts':
@@ -52,12 +56,13 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
 
           let newTotalMonthlyCost = parseFloat((newMonthlyTraditionalMortgageInterest + row.monthlyPropertyTax + row.monthlyHOA + row.monthlyHomeInsurance + row.monthlyManagementFee).toFixed(2));
 
+          let writeOffMargin = parseFloat((row.estimatedRent - (newTotalMonthlyCost + row.monthlyDepreciation)).toFixed(2));
 
           let netRatio = parseFloat((((row.estimatedRent - newTotalMonthlyCost) * 12 / (downpayment + newAdditionalCosts)) * 100).toFixed(2));
 
           let capRate = parseFloat((((row.estimatedRent - newTotalMonthlyCost) * 12 / (row.PRICE + newAdditionalCosts)) * 100).toFixed(2));
 
-          return { ...row, traditionalMortgageAmount: newTraditionalMortgageAmount, monthlyTraditionalMortgageInterest: newMonthlyTraditionalMortgageInterest, totalMonthlyCost: newTotalMonthlyCost, netRatio, capRate };
+          return { ...row, traditionalMortgageAmount: newTraditionalMortgageAmount, monthlyTraditionalMortgageInterest: newMonthlyTraditionalMortgageInterest, totalMonthlyCost: newTotalMonthlyCost, writeOffMargin, netRatio, capRate };
         }));
         break;
       default:
@@ -99,7 +104,7 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
               <Form>
                 <Form.Group controlId="downpayment">
                   <Form.Label>首付</Form.Label>
-                  <Form.Control className="financial-font-size" type="number" name="downpayment" value={downpayment} onChange={handleChange} />
+                  <Form.Control className="financial-font-size" type="number" name="downpayment" value={downpayment} onChange={handleChange} step={1000} />
                   <Form.Text>USD</Form.Text>
                 </Form.Group>
               </Form>
@@ -118,6 +123,7 @@ const FinancialInputs = ({ data, setData, traditionalMortgageRate, setTraditiona
                     name="additionalCosts"
                     value={additionalCosts}
                     onChange={handleChange}
+                    step={1000}
                   />
                   <Form.Text>USD</Form.Text>
                 </Form.Group>

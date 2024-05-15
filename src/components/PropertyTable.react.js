@@ -88,7 +88,11 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 		newData[index].perSqft = parseInt(newListingPrice / row.SQUAREFEET);
 
 		// Recalculate property tax
-		let newMonthlyPropertyTax = parseFloat((newListingPrice * (propertyTaxRateMap[row.CITY] ?? 0.51 * 0.01) / 12).toFixed(2));
+		let newMonthlyPropertyTax = parseFloat((newListingPrice * (propertyTaxRateMap[row.CITY] ?? 0.51 * 0.01) * 0.7 / 12).toFixed(2));
+
+		if (newData[index].STATE === 'NC') {
+			newMonthlyPropertyTax = parseFloat((newListingPrice * 0.72 * 0.01 / 12).toFixed(2));
+		}
 		newData[index].monthlyPropertyTax = newMonthlyPropertyTax
 
 		// Recalculate total monthly cost for the updated row

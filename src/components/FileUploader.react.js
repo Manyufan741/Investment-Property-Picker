@@ -56,12 +56,20 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
 
         // ------------------------------------------------------------------------
 
-        let monthlyPropertyTax = parseFloat((listingPrice * (propertyTaxRateMap[dict['CITY']] ?? 0.51 * 0.01) / 12).toFixed(2));
+        let monthlyPropertyTax = parseFloat((listingPrice * (propertyTaxRateMap[dict['CITY']] ?? 0.51 * 0.01) * 0.7 / 12).toFixed(2)); // the 0.7 here is because the property tax of AZ houses doesn't always reflect to the exact percentage of the listing price. It is based on the LPV(Limited Property Value), which is a portion to the listing price.
+
+        if (dict['STATE OR PROVINCE'] === 'NC') {
+          monthlyPropertyTax = parseFloat((listingPrice * 0.72 * 0.01 / 12).toFixed(2));
+        }
 
         // Peoria has better rent/sqft ratio
         let estimatedRent = (dict['CITY'].toLowerCase() === 'peoria')
           ? parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2)) + 100
           : parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2));
+
+        if (dict['CITY'] === 'Las Vegas' || dict['STATE OR PROVINCE'] === 'NC') {
+          managementFee = parseFloat((estimatedRent * 0.08).toFixed(2));
+        }
 
         let annualIncome = estimatedRent * 12;
         let monthlyHOA = parseFloat(dict['HOA/MONTH'] === null ? 0 : parseFloat(dict['HOA/MONTH']));
@@ -88,11 +96,9 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
           url = urlEntry[1];
         }
 
-        if (dict['CITY'] === 'Las Vegas') {
-          managementFee = parseFloat((estimatedRent * 0.08).toFixed(2));
-        }
 
-        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downpayment, traditionalMortgageAmount, monthlyTraditionalMortgageInterest, monthlyPropertyTax, monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, totalMonthlyCost, monthlyDepreciation, writeOffMargin, estimatedRent, netRatio, capRate, 'URL': url };
+
+        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'STATE': dict['STATE OR PROVINCE'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downpayment, traditionalMortgageAmount, monthlyTraditionalMortgageInterest, monthlyPropertyTax, monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, totalMonthlyCost, monthlyDepreciation, writeOffMargin, estimatedRent, netRatio, capRate, 'URL': url };
 
         parsedData.push(parsedRow);
       }

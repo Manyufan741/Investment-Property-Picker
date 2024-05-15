@@ -98,7 +98,7 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
 
 
 
-        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'STATE': dict['STATE OR PROVINCE'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downpayment, traditionalMortgageAmount, monthlyTraditionalMortgageInterest, monthlyPropertyTax, monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, totalMonthlyCost, monthlyDepreciation, writeOffMargin, estimatedRent, netRatio, capRate, 'URL': url };
+        let parsedRow = { 'ADDRESS': dict['ADDRESS'], 'POSTALCODE': dict['ZIP OR POSTAL CODE'], 'PRICE': listingPrice, 'BEDS': dict['BEDS'], 'BATHS': dict['BATHS'], 'CITY': dict['CITY'], 'STATE': dict['STATE OR PROVINCE'], 'LOCATION': dict['LOCATION'], 'SQUAREFEET': dict['SQUARE FEET'], 'LOTSIZE': dict['LOT SIZE'], 'yearBuilt': dict['YEAR BUILT'], 'daysOnMarket': dict['DAYS ON MARKET'], 'perSqft': dict['$/SQUARE FEET'], 'DOWNPAYMENT': downpayment, traditionalMortgageAmount, monthlyTraditionalMortgageInterest, monthlyPropertyTax, monthlyHOA, 'monthlyHomeInsurance': homeInsurance, 'monthlyManagementFee': managementFee, totalMonthlyCost, monthlyDepreciation, writeOffMargin, estimatedRent, netRatio, capRate, 'URL': url };
 
         parsedData.push(parsedRow);
       }

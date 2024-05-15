@@ -202,7 +202,8 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 									<th>Address</th>
 									<th>City</th>
 									<th>Postal Code</th>
-									<th>Listing Price(售價)</th>
+									<th onClick={() => handleSort("LOCATION")}>Location</th>
+									<th style={{ width: "100px" }}>Listing Price(售價)</th>
 									<th>Beds & Baths</th>
 									<th>Sqft</th>
 									<th>Lot Size</th>
@@ -244,7 +245,7 @@ const PropertyTable = ({ data, setData, onEditRent, onSort, traditionalMortgageR
 										</td>
 										<td>{row.CITY}</td>
 										<td>{row.POSTALCODE}</td>
-										{/* <td>${row.PRICE}</td> */}
+										<td>{row.LOCATION}</td>
 										<td>{<EditableCell value={row.PRICE} onValueChange={(newListingPrice) => handleListingPriceChange(index, newListingPrice)} />}</td>
 										<td>{row.BEDS}b{row.BATHS}b</td>
 										<td>{row.SQUAREFEET}</td>

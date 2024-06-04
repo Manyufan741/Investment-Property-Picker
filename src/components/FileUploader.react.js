@@ -63,7 +63,7 @@ const FileUploader = ({ setData, isChecked, setIsChecked, traditionalMortgageRat
         }
 
         // Peoria has better rent/sqft ratio
-        let estimatedRent = (dict['CITY'].toLowerCase() === 'peoria')
+        let estimatedRent = (dict['CITY'].toLowerCase() === 'peoria' || dict['CITY'].toLowerCase() === 'chandler' || dict['CITY'].toLowerCase() === 'gilbert')
           ? parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2)) + 100
           : parseFloat((parseInt(dict['SQUARE FEET']) * 1).toFixed(2));
 

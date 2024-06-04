@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../investment-property-picker-heroku"
+		},
+		{
+			"path": "../../../node-js-getting-started"
+		}
+	],
+	"settings": {}
+}
